@@ -4,7 +4,7 @@
 
 **বাজার দর** is a responsive web application that helps users explore daily market prices of essential products in Bangladesh. It provides product-wise price information, daily price changes, category-based browsing, and detailed market price comparisons through a clean and user-friendly interface.
 
-🔗 **Live Demo:** [Visit BazarDor]([https://your-live-demo-url.vercel.app](https://bazar-dor-wheat.vercel.app/))
+
 
 ---
 
