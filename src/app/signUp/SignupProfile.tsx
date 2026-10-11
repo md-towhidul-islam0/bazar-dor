@@ -31,15 +31,14 @@ export default function SignupForm() {
 
         setLoading(true);
 
-        try {
-            // autoSignIn: false অপশন যুক্ত করা হয়েছে
+        
             const { data: res, error } = await authClient.signUp.email({
                 name,
                 email,
                 password,
             }, {
                 
-             
+            
             });
 
             if (error) {
@@ -66,18 +65,11 @@ export default function SignupForm() {
                     transition: Bounce,
                 });
 
-                // নিরাপদ থাকার জন্য যদি আগে কোনো সেশন তৈরি হয়ে থাকে তা সাইন-আউট করে দিন
-                await authClient.signOut();
                 
-                // সাইন-ইন/লগইন পেজে রিডাইরেক্ট করা হচ্ছে
+                await authClient.signOut();
                 router.push("/signIn");
             }
-        } catch (err: any) {
-            setErrorMsg('একটি অপ্রত্যাশিত ত্রুটি ঘটেছে!');
-            toast.error('একটি অপ্রত্যাশিত ত্রুটি ঘটেছে!');
-        } finally {
-            setLoading(false);
-        }
+       
     };
 
     // Social Auth Handlers
@@ -150,10 +142,10 @@ export default function SignupForm() {
 
                     <button
                         type="submit"
-                        disabled={loading}
+                        
                         className="w-full py-3 bg-[#0d8239] hover:bg-[#0b6f30] disabled:bg-gray-400 text-white font-medium rounded-lg transition duration-200 text-sm shadow-sm"
                     >
-                        {loading ? 'প্রসেসিং হচ্ছে...' : 'অ্যাকাউন্ট তৈরি করুন'}
+                        {'অ্যাকাউন্ট তৈরি করুন'}
                     </button>
                 </form>
 
@@ -187,7 +179,7 @@ export default function SignupForm() {
 
                 <p className="text-center text-xs text-gray-600 mt-6">
                     অ্যাকাউন্ট আছে?{' '}
-                    <Link href="/signin" className="text-[#0d8239] hover:underline font-medium">
+                    <Link href="/signIn" className="text-[#0d8239] hover:underline font-medium">
                         সাইন ইন করুন
                     </Link>
                 </p>
