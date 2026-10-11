@@ -153,7 +153,7 @@ export default function SigninForm() {
                 {/* Signup Link */}
                 <p className="text-center text-xs text-gray-600 mt-6">
                     অ্যাকাউন্ট নেই?{' '}
-                    <Link href="/signup" className="text-[#0d8239] hover:underline font-medium">
+                    <Link href="/signUp" className="text-[#0d8239] hover:underline font-medium">
                         সাইন আপ করুন
                     </Link>
                 </p>
