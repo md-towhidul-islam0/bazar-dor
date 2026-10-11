@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from 'react-icons/fa';
 import { authClient } from '@/lib/auth-client';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { Bounce, toast } from 'react-toastify';
 
 export default function SignupForm() {
@@ -31,45 +31,47 @@ export default function SignupForm() {
 
         setLoading(true);
 
-        
-            const { data: res, error } = await authClient.signUp.email({
-                name,
-                email,
-                password,
-            }, {
-                
-            
+
+        const { data: res, error } = await authClient.signUp.email({
+            name,
+            email,
+            password,
+        }, {
+
+
+        });
+        console.log(res, error);
+
+        if (error) {
+            setErrorMsg(error.message || 'সাইন আপ ব্যর্থ হয়েছে!');
+            toast.error(error.message || 'সাইন আপ ব্যর্থ হয়েছে!', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                theme: "light",
+                transition: Bounce,
+            });
+        } else {
+            toast.success('অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে! অনুগ্রহ করে লগইন করুন।', {
+                position: "top-center",
+                autoClose: 4000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                theme: "light",
+                transition: Bounce,
             });
 
-            if (error) {
-                setErrorMsg(error.message || 'সাইন আপ ব্যর্থ হয়েছে!');
-                toast.error(error.message || 'সাইন আপ ব্যর্থ হয়েছে!', {
-                    position: "top-center",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: false,
-                    pauseOnHover: true,
-                    draggable: true,
-                    theme: "light",
-                    transition: Bounce,
-                });
-            } else {
-                toast.success('অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে! অনুগ্রহ করে লগইন করুন।', {
-                    position: "top-center",
-                    autoClose: 4000,
-                    hideProgressBar: false,
-                    closeOnClick: false,
-                    pauseOnHover: true,
-                    draggable: true,
-                    theme: "light",
-                    transition: Bounce,
-                });
 
-                
-                await authClient.signOut();
-                router.push("/signIn");
-            }
-       
+            await authClient.signOut();
+            redirect('signIn')
+        }
+
+
     };
 
     // Social Auth Handlers
@@ -142,7 +144,7 @@ export default function SignupForm() {
 
                     <button
                         type="submit"
-                        
+
                         className="w-full py-3 bg-[#0d8239] hover:bg-[#0b6f30] disabled:bg-gray-400 text-white font-medium rounded-lg transition duration-200 text-sm shadow-sm"
                     >
                         {'অ্যাকাউন্ট তৈরি করুন'}
